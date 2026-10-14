@@ -1,0 +1,36 @@
+{
+  "school": "Purdue University",
+  "handbook": "Purdue-standard-thesis-handbook-April-2026.docx",
+  "template": "Purdue-standard-thesis-template-April-2026.docx",
+
+  "font": "Times New Roman",
+  "text_width_pt": 468.0,
+  "table_fits_pt": 580.0,
+  "page_sizes_twips": [[12240, 15840], [12240, 20160], [15840, 24480]],
+  "body_alignment": "both",
+  "abstract_word_limit": 250,
+
+  "major_headings": ["ACKNOWLEDGMENTS", "ACKNOWLEDGEMENTS", "TABLE OF CONTENTS", "LIST OF TABLES", "LIST OF FIGURES", "LIST OF SCHEMES", "LIST OF ABBREVIATIONS", "LIST OF SYMBOLS", "NOMENCLATURE", "GLOSSARY", "ABSTRACT", "REFERENCES", "PUBLICATIONS", "PUBLICATION", "VITA"],
+  "front_zones": ["TITLE", "COMMITTEE", "DEDICATION"],
+  "list_zones": ["TABLE OF CONTENTS", "LIST OF TABLES", "LIST OF FIGURES", "LIST OF SCHEMES"],
+  "no_indent_zones": ["LIST OF ABBREVIATIONS", "LIST OF SYMBOLS", "NOMENCLATURE", "GLOSSARY"],
+  "normal_headings": ["ACKNOWLEDGMENTS", "ACKNOWLEDGEMENTS", "TABLE OF CONTENTS"],
+  "committee_headers": ["THE PURDUE UNIVERSITY GRADUATE SCHOOL", "STATEMENT OF COMMITTEE APPROVAL"],
+  "sub_styles": {"Heading2": 2, "Heading3": 3, "Heading4": 4, "Heading5": 5, "PurdueHeading2": 2, "PurdueHeading3": 3, "PurdueHeading4": 4},
+  "heading_level": {"Heading1": 1, "Heading2": 2, "Heading3": 3, "Heading4": 4, "Heading5": 5},
+  "heading_numbering": {
+    "1": ["decimal", "%1.", 0, 0],
+    "2": ["decimal", "%1.%2", 576, 576],
+    "3": ["decimal", "%1.%2.%3", 720, 720],
+    "4": ["none", "", 0, 0],
+    "5": ["none", "", 0, 0]
+  },
+  "caption_pattern": "^(Table|Figure|Scheme)\\s+(\\d+)\\.(\\d+)\\.(\\s|$)",
+  "revision_tags": ["ins", "del", "moveFrom", "moveTo", "rPrChange", "pPrChange", "sectPrChange", "tblPrChange", "trPrChange", "tcPrChange", "numberingChange", "tblGridChange"],
+
+  "contrast_min": 3.0,
+  "color_share_min": 0.01,
+  "chart_max_colors": 32,
+  "chroma_min": 40,
+  "area_fill_share": 0.30
+}

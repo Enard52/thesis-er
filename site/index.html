@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Upload your thesis Word file and find every formatting and accessibility problem before the graduate school does. Free, deterministic, open source.">
+<title>Thesis ER — will your thesis pass review?</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="disclaimer" role="banner">
+  <span><strong>Unofficial community project.</strong> Not sponsored by, endorsed by, or affiliated with Purdue University. Always confirm against the official handbook before you submit.</span>
+</header>
+
+<nav class="nav" aria-label="Site">
+  <a class="brand" href="#top">Thesis&nbsp;ER</a>
+  <div class="nav-links">
+    <a href="#checker">Check my thesis</a>
+    <a href="#how">How it works</a>
+    <a href="#universities">Universities</a>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="hero" aria-label="Introduction">
+    <p class="kicker">The Thesis ER · born at Purdue · ready for your university</p>
+    <h1>Will your thesis pass review?</h1>
+    <p class="lede">Upload your thesis Word file. Get back every formatting and accessibility problem — each with what the handbook actually wants instead — <em>before</em> the graduate school does.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#checker">Check my thesis</a>
+      <a class="btn btn-ghost" href="#how">How it works</a>
+    </div>
+    <ul class="stats" aria-label="What the checker does">
+      <li><strong>85</strong><span>handbook + template checks</span></li>
+      <li><strong>AA</strong><span>WCAG 2.1 accessibility findings</span></li>
+      <li><strong>100%</strong><span>deterministic — same file, same report</span></li>
+    </ul>
+  </section>
+
+  <section class="panel checker" id="checker" aria-label="Analyze your thesis">
+    <h2>Check my thesis</h2>
+    <div class="row">
+      <label for="uni">University</label>
+      <select id="uni"><option value="purdue">Purdue</option></select>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <svg class="doc-icon" viewBox="0 0 24 24" width="40" height="40" aria-hidden="true" focusable="false">
+        <path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M14 2v4h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="9" y1="15.5" x2="15" y2="15.5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <p class="dz-title" id="dz-title">Drag your <code>.docx</code> here, or</p>
+      <label class="dz-pick" for="file">Choose a file</label>
+      <input type="file" id="file" accept=".docx" aria-describedby="dz-rules dz-status">
+      <p class="dz-rules" id="dz-rules">Word files only (.docx) · max 50&nbsp;MB · no database, no storage, no tracking — your file is analyzed and deleted the second the report is done, because there is nowhere here it <em>could</em> be kept. Thesis under confidentiality or embargo? Skip the upload: download the checker and run it on your own machine instead — fully offline, same 85 checks.</p>
+      <p class="dz-state" id="dz-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="queue" id="queue" hidden>
+      <div class="file-card">
+        <div class="file-meta"><strong id="q-name"></strong><span id="q-size"></span></div>
+        <button class="btn btn-ghost btn-small" id="q-remove" type="button">Remove</button>
+      </div>
+      <button class="btn btn-primary btn-big" id="go" type="button">Run the 85 checks</button>
+      <div class="progress" id="progress" hidden>
+        <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Analysis progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+        <p class="progress-step" id="status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="form-error" id="form-error" role="alert" hidden></p>
+  </section>
+
+  <section id="results" class="panel results" hidden aria-label="Results">
+    <h2 id="verdict"></h2>
+    <p id="summary"></p>
+    <div class="report-actions">
+      <button class="btn btn-ghost btn-small" id="copy-report" type="button">Copy summary</button>
+      <button class="btn btn-ghost btn-small" id="download-json" type="button">Download full report (JSON)</button>
+    </div>
+    <h3 class="ada-heading">Accessibility <span class="tag">ADA / WCAG 2.1 AA</span></h3>
+    <p class="section-note">Alt text, chart contrast, heading structure, table accessibility, reading order. An empty section means no accessibility issues were found.</p>
+    <div id="ada"></div>
+    <h3>Formatting</h3>
+    <div id="formatting"></div>
+  </section>
+
+  <section class="panel" id="how" aria-label="How it works">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><strong>Upload.</strong> Your <code>.docx</code> is read directly — styles, numbering, images, tracked changes.</li>
+      <li><strong>85 checks run.</strong> Handbook rules, template rules, accessibility rules, submission hygiene. No AI guessing.</li>
+      <li><strong>You get locations + fixes.</strong> Every finding carries a stable rule ID and says what the handbook wants <em>instead</em>.</li>
+    </ol>
+    <p class="section-note">Want the auto-fixer too, or to run offline? The command-line tools are in the repo.</p>
+    <p id="repo-cta"></p>
+  </section>
+
+  <section class="panel" id="universities" aria-label="Universities">
+    <h2>Not at Purdue?</h2>
+    <p>School-specific requirements live in config files, not in code. Add your university by copying one JSON file — <a href="#universities">contribution guide in the repo</a> walks you through it.</p>
+  </section>
+
+  <footer>Unofficial community project — not sponsored by Purdue University. <span id="repo-link"></span></footer>
+</main>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
