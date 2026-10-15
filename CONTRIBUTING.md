@@ -24,3 +24,10 @@ Thanks for helping fellow thesis writers avoid rejected submissions. Small, focu
 
 - MIT-licensed project: your contributions are accepted under the same license.
 - Be kind in reviews. Many contributors are students under deadline pressure.
+
+## Requesting (or adding) your university
+
+Only Purdue is supported today. To request your school, [open a university-request issue](https://github.com/mogiiee/thesis-er/issues/new?template=university-request.md)
+with your graduate school's handbook — the maintainer will help turn its requirements into a config.
+If you'd rather write the config yourself, copy `universities/purdue.json` (see `universities/README.md`)
+and send it as a pull request; handbook quotes for every value make review fast.

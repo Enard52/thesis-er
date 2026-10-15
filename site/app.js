@@ -1,8 +1,10 @@
-/* global REPO_URL, BACKEND_URL */
+/* global REPO_URL, BACKEND_URL, RULE_COUNT, RULE_FAMILIES */
 (function () {
   "use strict";
   var MAX_BYTES = 50 * 1024 * 1024;
   var API = (typeof BACKEND_URL !== "undefined" && BACKEND_URL) || "";
+  var REPO = (typeof REPO_URL !== "undefined" && REPO_URL) || "";
+  var NCHECKS = (typeof RULE_COUNT !== "undefined" && RULE_COUNT) || 89;
   var uniSel = document.getElementById("uni");
   var fileInput = document.getElementById("file");
   var dropzone = document.getElementById("dropzone");
@@ -34,10 +36,71 @@
     document.getElementById("repo-link").innerHTML = '<a href="' + REPO_URL + '">GitHub</a>';
   }
 
+  /* Single source for repo-file links: every [data-repo-file] resolves to the
+     matching blob on the default branch, so links can never rot. */
+  if (REPO) {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-repo-file]"), function (a) {
+      a.href = REPO + "/blob/main/" + a.getAttribute("data-repo-file");
+      a.target = "_blank";
+      a.rel = "noopener";
+    });
+    var rs = document.getElementById("request-school");
+    if (rs) {
+      rs.href = REPO + "/issues/new?template=university-request.md";
+      rs.target = "_blank";
+      rs.rel = "noopener";
+    }
+  }
+
+  /* The true check count, stamped everywhere by the generator. */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-rule-count]"), function (el) {
+    el.textContent = NCHECKS;
+  });
+
+  /* Current-rules tab: families generated from the checker source. */
+  (function renderRules() {
+    var host = document.getElementById("rules-list");
+    if (!host || typeof RULE_FAMILIES === "undefined") return;
+    RULE_FAMILIES.forEach(function (fam) {
+      var d = document.createElement("details");
+      d.className = "rule";
+      var items = fam.rules.map(function (r) {
+        return '<li><code>' + esc(r.rule) + '</code> <span class="sev ' + r.severity + '">' +
+          r.severity + "</span> " + esc(r.desc) + "</li>";
+      }).join("");
+      var s = document.createElement("summary");
+      s.textContent = fam.title + " (" + fam.rules.length + ")";
+      var intro = document.createElement("p");
+      intro.className = "section-note";
+      intro.textContent = fam.intro;
+      var ul = document.createElement("ul");
+      ul.innerHTML = items;
+      d.appendChild(s);
+      d.appendChild(intro);
+      d.appendChild(ul);
+      host.appendChild(d);
+    });
+    document.getElementById("rules-feedback").innerHTML =
+      "Spotted a rule that's wrong or out of date? " +
+      '<a href="' + REPO + '/issues/new?template=rule-correction.md">Open an issue</a> — ' +
+      "you'll help every student who runs this after you.";
+  })();
+
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
     });
+  }
+
+  function jumpTo(el) {
+    /* CSS smooth scrolling made freshly rendered reports look like nothing
+       happened on long pages. Force one synchronous layout jump, then restore
+       the user's normal scrolling preference. */
+    var root = document.documentElement;
+    var prior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    el.scrollIntoView({ block: "start" });
+    root.style.scrollBehavior = prior;
   }
 
   function fmtSize(n) {
@@ -86,7 +149,7 @@
       qSize.textContent = fmtSize(f.size) + " · ready to check";
       queueEl.hidden = false;
       progressEl.hidden = true;
-      say(f.name + " added — press “Run the 85 checks”.", false);
+      say(f.name + " added — press “Run the " + NCHECKS + " checks”.", false);
     };
     reader.readAsArrayBuffer(f.slice(0, 2));
   }
@@ -156,8 +219,16 @@
         : " Start with the ERROR items: each one says what the handbook wants instead.");
     renderGroups(document.getElementById("ada"), report.ada);
     renderGroups(document.getElementById("formatting"), report.formatting);
+    if (REPO) {
+      document.getElementById("report-wrong").href =
+        REPO + "/issues/new?template=rule-correction.md" +
+        "&title=" + encodeURIComponent("[rule]: report on " + report.filename + " looks wrong") +
+        "&body=" + encodeURIComponent("Page: " + location.href + "\nRule ID (copy it from the report above): \nWhat the handbook actually wants: ");
+      document.getElementById("report-wrong").target = "_blank";
+      document.getElementById("report-wrong").rel = "noopener";
+    }
     resultsEl.hidden = false;
-    resultsEl.scrollIntoView();
+    jumpTo(resultsEl);
   }
 
   goBtn.addEventListener("click", function () {
@@ -209,6 +280,64 @@
     a.remove();
   });
 
+  /* 3D tab deck: nav brings one card forward, the rest float behind.
+     Hash-driven, so deep links and back/forward keep working. */
+  var CARDS = ["checker", "rules", "how", "universities", "about"];
+  var stage = document.getElementById("stage");
+  function activate(id, push) {
+    if (CARDS.indexOf(id) === -1) id = "checker";
+    /* A report belongs to the checker card. Remove it from document flow while
+       another card is active, otherwise it sits between the deck and the
+       requested card and makes navigation appear broken. */
+    resultsEl.hidden = id !== "checker" || !lastReport;
+    CARDS.forEach(function (c) {
+      var el = document.getElementById(c);
+      var on = c === id;
+      el.classList.toggle("active", on);
+      el.classList.toggle("background", !on);
+      if (on) el.removeAttribute("inert"); else el.setAttribute("inert", "");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#nav-links a"), function (a) {
+      var on = a.getAttribute("href") === "#" + id;
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (push !== false) {
+      try { history.replaceState(null, "", "#" + id); } catch (e) { /* file:// etc. */ }
+      jumpTo(stage);
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("#nav-links a, .cta-row a"), function (a) {
+    a.addEventListener("click", function (e) {
+      var id = (a.getAttribute("href") || "").slice(1);
+      if (CARDS.indexOf(id) === -1) return;
+      e.preventDefault();
+      activate(id);
+    });
+  });
+  window.addEventListener("hashchange", function () { activate(location.hash.slice(1), false); });
+  activate((location.hash || "#checker").slice(1), false);
+
+  /* Scroll drives the CSS-built scene. Keep the listener passive and collapse
+     all work into one animation frame so the page stays responsive. */
+  var scrollQueued = false;
+  function paintScroll() {
+    var root = document.documentElement;
+    var y = window.scrollY || window.pageYOffset || 0;
+    var max = Math.max(1, root.scrollHeight - window.innerHeight);
+    var heroHeight = Math.max(1, document.querySelector(".hero").offsetHeight * 0.78);
+    root.style.setProperty("--page-progress", Math.min(1, y / max).toFixed(4));
+    root.style.setProperty("--hero-progress", Math.min(1, y / heroHeight).toFixed(4));
+    scrollQueued = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!scrollQueued) {
+      scrollQueued = true;
+      window.requestAnimationFrame(paintScroll);
+    }
+  }, { passive: true });
+  paintScroll();
+
   /* exposed for automated verification */
   window.renderReport = renderReport;
+  window.activateCard = activate;
 })();

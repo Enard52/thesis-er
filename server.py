@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
-"""Local demo server for the thesis format checker website (tickets 03/04).
+"""Web server for the thesis format checker site and API.
 
 Serves site/ and exposes POST /api/check, which runs the real checker on an
 uploaded .docx and returns the findings as JSON. The uploaded file is written
 to a temp file, checked, and deleted in the same request: nothing is stored.
 
-This is the deployment-shape prototype, not production hosting. Production
-still needs: the public repo URL in site/config.js, GitHub Pages (or any
-static host) for site/, and a host for this process (or its equivalent).
-
 Usage:
-    python3 server.py [port, default 8000]
+    python3 server.py [port, default $PORT or 8000]
 """
 from __future__ import annotations
 
@@ -27,6 +23,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")
 MAX_BYTES = 50 * 1024 * 1024
 CHECK_LOCK = threading.Lock()  # config lives in module globals, so one analysis at a time
+ALLOWED_ORIGINS = {
+    origin.strip()
+    for origin in os.environ.get(
+        "ALLOWED_ORIGINS",
+        "https://mogiiee.github.io,http://127.0.0.1:8000,"
+        "http://127.0.0.1:8130,http://localhost:8000",
+    ).split(",")
+    if origin.strip()
+}
 
 MIME = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8",
         ".js": "application/javascript; charset=utf-8", ".json": "application/json"}
@@ -65,11 +70,28 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(data)))
+        origin = self.headers.get("Origin")
+        if origin in ALLOWED_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
         self.end_headers()
         self.wfile.write(data)
 
     def _json(self, code, obj):
         self._send(code, json.dumps(obj).encode(), "application/json")
+
+    def do_OPTIONS(self):
+        if urllib.parse.urlparse(self.path).path not in ("/api/check", "/api/universities"):
+            return self._json(404, {"error": "not found"})
+        self.send_response(204)
+        origin = self.headers.get("Origin")
+        if origin in ALLOWED_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Max-Age", "86400")
+        self.end_headers()
 
     def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
@@ -125,16 +147,20 @@ class Handler(BaseHTTPRequestHandler):
         ada = [g for g in findings if g["rule"].startswith("A11Y")]
         formatting = [g for g in findings if not g["rule"].startswith("A11Y")]
         errors = sum(1 for i in issues if i.severity == "ERROR")
-        self._json(200, {"filename": filename, "university": uni, "verdict": "PASS" if errors == 0 else "FAIL",
+        verdict = "PASS" if errors == 0 else "FAIL"
+        print(f"checked {len(data)} bytes -> {verdict} "
+              f"({errors} errors); temp file deleted, nothing stored", flush=True)
+        self._json(200, {"filename": filename, "university": uni, "verdict": verdict,
                          "errors": errors, "infos": len(issues) - errors,
                          "ada": ada, "formatting": formatting})
 
 
 if __name__ == "__main__":
     import sys
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    srv = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"serving site/ and POST /api/check on http://127.0.0.1:{port} (Ctrl-C to stop)")
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else int(os.environ.get("PORT", "8000"))
+    host = os.environ.get("HOST", "0.0.0.0")
+    srv = ThreadingHTTPServer((host, port), Handler)
+    print(f"serving site/ and POST /api/check on http://{host}:{port} (Ctrl-C to stop)")
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

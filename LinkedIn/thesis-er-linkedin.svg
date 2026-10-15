@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627">
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#171a17" stroke-opacity=".08"/>
+    </pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="180%" height="190%">
+      <feDropShadow dx="20" dy="24" stdDeviation="10" flood-color="#171a17" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="627" fill="#dfe8b5"/>
+  <rect width="1200" height="627" fill="url(#grid)"/>
+  <rect width="1200" height="35" fill="#171a17"/>
+  <text x="36" y="23" fill="#d7ff52" font-family="Arial, sans-serif" font-size="11" font-weight="700">UNOFFICIAL COMMUNITY PROJECT &#183; PURDUE 2026 RULE SET</text>
+  <text x="36" y="75" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="23" font-weight="900">THESIS ER</text>
+  <text x="174" y="73" fill="#4f5748" font-family="Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="2">/ FORMAT LAB</text>
+  <circle cx="39" cy="113" r="6" fill="#ff765f"/>
+  <text x="55" y="117" fill="#171a17" font-family="Arial, sans-serif" font-size="11" font-weight="800" letter-spacing="2">THESIS DIAGNOSTICS ONLINE</text>
+  <rect x="36" y="133" width="285" height="31" fill="#d7ff52" stroke="#171a17" stroke-width="2"/>
+  <text x="51" y="153" fill="#171a17" font-family="Arial, sans-serif" font-size="11" font-weight="800" letter-spacing="1">PURDUE &#183; 89 CHECKS &#183; WCAG 2.1 AA</text>
+
+  <text x="34" y="234" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="75" font-weight="900">WILL YOUR</text>
+  <text x="34" y="309" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="75" font-weight="900">THESIS</text>
+  <text x="34" y="384" fill="none" stroke="#171a17" stroke-width="2" font-family="Arial Black, Arial, sans-serif" font-size="75" font-weight="900">PASS REVIEW?</text>
+
+  <text x="39" y="432" fill="#171a17" font-family="Arial, sans-serif" font-size="17">Formatting + accessibility findings, with locations and suggested fixes.</text>
+  <rect x="36" y="462" width="202" height="46" fill="#171a17"/>
+  <text x="60" y="491" fill="#d7ff52" font-family="Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="1">CHECK YOUR THESIS &#8599;</text>
+  <text x="36" y="548" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="29" font-weight="900">89</text>
+  <text x="96" y="548" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="29" font-weight="900">AA</text>
+  <text x="154" y="548" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="29" font-weight="900">0</text>
+  <text x="36" y="567" fill="#4f5748" font-family="Arial, sans-serif" font-size="10" font-weight="700">CHECKS</text>
+  <text x="96" y="567" fill="#4f5748" font-family="Arial, sans-serif" font-size="10" font-weight="700">ACCESS</text>
+  <text x="154" y="567" fill="#4f5748" font-family="Arial, sans-serif" font-size="10" font-weight="700">FILES STORED</text>
+
+  <g transform="translate(685 122) rotate(-5 210 190)" filter="url(#shadow)">
+    <rect x="0" y="0" width="420" height="390" fill="#f3f0dc" fill-opacity=".55" stroke="#171a17" stroke-width="2"/>
+    <ellipse cx="210" cy="195" rx="195" ry="115" fill="none" stroke="#171a17" stroke-width="2" transform="rotate(-11 210 195)"/>
+    <ellipse cx="210" cy="195" rx="122" ry="190" fill="none" stroke="#171a17" stroke-width="2" transform="rotate(49 210 195)"/>
+    <circle cx="51" cy="129" r="7" fill="#d7ff52" stroke="#171a17" stroke-width="2"/>
+    <circle cx="355" cy="115" r="7" fill="#66d8d0" stroke="#171a17" stroke-width="2"/>
+    <circle cx="370" cy="247" r="7" fill="#ff765f" stroke="#171a17" stroke-width="2"/>
+    <g transform="translate(80 92) rotate(18 135 110)">
+      <rect x="25" y="24" width="270" height="220" fill="#f3f0dc" stroke="#171a17" stroke-width="3"/>
+      <rect x="13" y="12" width="270" height="220" fill="#ff765f" stroke="#171a17" stroke-width="3"/>
+      <rect x="0" y="0" width="270" height="220" fill="#8c73ff" stroke="#171a17" stroke-width="3"/>
+      <rect x="-12" y="82" width="294" height="39" fill="#d7ff52" stroke="#171a17" stroke-width="3"/>
+      <text x="25" y="38" fill="#171a17" font-family="Arial, sans-serif" font-size="10" font-weight="800" letter-spacing="2">PURDUE UNIVERSITY</text>
+      <text x="29" y="103" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="43" font-weight="900">THESIS</text>
+      <text x="29" y="145" fill="#171a17" font-family="Arial Black, Arial, sans-serif" font-size="43" font-weight="900">REVIEW</text>
+      <line x1="29" y1="174" x2="137" y2="174" stroke="#171a17" stroke-width="8"/>
+      <text x="29" y="202" fill="#171a17" font-family="Arial, sans-serif" font-size="9" font-weight="700">FORMAT &#183; ACCESSIBILITY &#183; SUBMISSION</text>
+    </g>
+    <rect x="-20" y="52" width="113" height="34" fill="#f3f0dc" stroke="#171a17" stroke-width="2"/>
+    <text x="-4" y="74" fill="#513ebc" font-family="Arial, sans-serif" font-size="14" font-weight="900">01</text>
+    <text x="22" y="74" fill="#171a17" font-family="Arial, sans-serif" font-size="12" font-weight="800">MARGINS</text>
+    <rect x="335" y="126" width="108" height="34" fill="#f3f0dc" stroke="#171a17" stroke-width="2"/>
+    <text x="349" y="148" fill="#513ebc" font-family="Arial, sans-serif" font-size="14" font-weight="900">AA</text>
+    <text x="377" y="148" fill="#171a17" font-family="Arial, sans-serif" font-size="12" font-weight="800">ACCESS</text>
+    <rect x="15" y="328" width="104" height="34" fill="#f3f0dc" stroke="#171a17" stroke-width="2"/>
+    <text x="29" y="350" fill="#513ebc" font-family="Arial, sans-serif" font-size="14" font-weight="900">89</text>
+    <text x="57" y="350" fill="#171a17" font-family="Arial, sans-serif" font-size="12" font-weight="800">RULES</text>
+  </g>
+  <text x="860" y="585" fill="#171a17" font-family="Arial, sans-serif" font-size="14" font-weight="800">mogiiee.github.io/thesis-er</text>
+</svg>

@@ -8,40 +8,76 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="scroll-meter" aria-hidden="true"><span></span></div>
 <header class="disclaimer" role="banner">
   <span><strong>Unofficial community project.</strong> Not sponsored by, endorsed by, or affiliated with Purdue University. Always confirm against the official handbook before you submit.</span>
 </header>
 
 <nav class="nav" aria-label="Site">
   <a class="brand" href="#top">Thesis&nbsp;ER</a>
-  <div class="nav-links">
+  <div class="nav-links" id="nav-links">
     <a href="#checker">Check my thesis</a>
+    <a href="#rules">Current rules</a>
     <a href="#how">How it works</a>
     <a href="#universities">Universities</a>
+    <a href="#about">About</a>
   </div>
 </nav>
 
 <main id="top">
   <section class="hero" aria-label="Introduction">
-    <p class="kicker">The Thesis ER · born at Purdue · ready for your university</p>
-    <h1>Will your thesis pass review?</h1>
-    <p class="lede">Upload your thesis Word file. Get back every formatting and accessibility problem — each with what the handbook actually wants instead — <em>before</em> the graduate school does.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="#checker">Check my thesis</a>
-      <a class="btn btn-ghost" href="#how">How it works</a>
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="signal-dot"></span> Thesis diagnostics online</p>
+      <p class="kicker">Purdue · 2026 rule set · community built</p>
+      <h1>Will your thesis<br><em>pass review?</em></h1>
+      <p class="lede">Run your Word file through the formatting and accessibility checks that Word misses. Every finding comes with a location, a rule ID, and what to fix.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#checker">Start the scan <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="#rules">Explore the rules</a>
+      </div>
+      <ul class="stats" aria-label="What the checker does">
+        <li><strong data-rule-count>89</strong><span>deterministic checks</span></li>
+        <li><strong>AA</strong><span>WCAG 2.1 findings</span></li>
+        <li><strong>0</strong><span>files stored</span></li>
+      </ul>
     </div>
-    <ul class="stats" aria-label="What the checker does">
-      <li><strong>85</strong><span>handbook + template checks</span></li>
-      <li><strong>AA</strong><span>WCAG 2.1 accessibility findings</span></li>
-      <li><strong>100%</strong><span>deterministic — same file, same report</span></li>
-    </ul>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="orbit orbit-a"></div>
+      <div class="orbit orbit-b"></div>
+      <div class="scan-beam"></div>
+      <div class="thesis-object">
+        <div class="book-spine"><span>THESIS · 2026</span></div>
+        <div class="book-cover">
+          <span class="book-kicker">PURDUE UNIVERSITY</span>
+          <strong>THESIS<br>REVIEW</strong>
+          <span class="book-lines"></span>
+          <small>FORMAT · ACCESSIBILITY · SUBMISSION</small>
+        </div>
+        <div class="book-pages"></div>
+      </div>
+      <div class="data-chip chip-a"><span>01</span> MARGINS</div>
+      <div class="data-chip chip-b"><span>AA</span> ACCESS</div>
+      <div class="data-chip chip-c"><span>89</span> RULES</div>
+      <div class="axis axis-x">X / 089</div>
+      <div class="axis axis-y">Y / 2026</div>
+    </div>
   </section>
 
-  <section class="panel checker" id="checker" aria-label="Analyze your thesis">
+  <div class="stage" id="stage">
+  <section class="panel checker card active" id="checker" data-tab="01 / Scan" aria-label="Analyze your thesis">
     <h2>Check my thesis</h2>
+    <div class="trust-grid" aria-label="Trust and scope">
+      <p><span>Engine</span><strong>Deterministic</strong><small>No AI decisions</small></p>
+      <p><span>Storage</span><strong>None</strong><small>Deleted after analysis</small></p>
+      <p><span>Scope</span><strong>Purdue</strong><small>2026 guidelines</small></p>
+    </div>
+    <p class="privacy-strip"><strong>Nothing is stored. Ever.</strong> Your file is analyzed and deleted the
+      second the report is done — no database, no accounts, no tracking. Working under embargo?
+      Skip the upload and <a data-repo-file="README.md">run it on your own machine</a> instead.</p>
     <div class="row">
       <label for="uni">University</label>
       <select id="uni"><option value="purdue">Purdue</option></select>
+      <span class="uni-note">Purdue only for now — <a href="#universities">request yours</a>.</span>
     </div>
 
     <div class="dropzone" id="dropzone">
@@ -54,7 +90,7 @@
       <p class="dz-title" id="dz-title">Drag your <code>.docx</code> here, or</p>
       <label class="dz-pick" for="file">Choose a file</label>
       <input type="file" id="file" accept=".docx" aria-describedby="dz-rules dz-status">
-      <p class="dz-rules" id="dz-rules">Word files only (.docx) · max 50&nbsp;MB · no database, no storage, no tracking — your file is analyzed and deleted the second the report is done, because there is nowhere here it <em>could</em> be kept. Thesis under confidentiality or embargo? Skip the upload: download the checker and run it on your own machine instead — fully offline, same 85 checks.</p>
+      <p class="dz-rules" id="dz-rules">Word files only (.docx) · max 50&nbsp;MB · no database, no storage, no tracking — your file is analyzed and deleted the second the report is done, because there is nowhere here it <em>could</em> be kept. Thesis under confidentiality or embargo? Skip the upload: download the checker and run it on your own machine instead — fully offline, same <span data-rule-count>89</span> checks.</p>
       <p class="dz-state" id="dz-status" role="status" aria-live="polite"></p>
     </div>
 
@@ -63,7 +99,7 @@
         <div class="file-meta"><strong id="q-name"></strong><span id="q-size"></span></div>
         <button class="btn btn-ghost btn-small" id="q-remove" type="button">Remove</button>
       </div>
-      <button class="btn btn-primary btn-big" id="go" type="button">Run the 85 checks</button>
+      <button class="btn btn-primary btn-big" id="go" type="button">Run the <span data-rule-count>89</span> checks</button>
       <div class="progress" id="progress" hidden>
         <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Analysis progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
         <p class="progress-step" id="status" role="status" aria-live="polite"></p>
@@ -79,6 +115,7 @@
       <button class="btn btn-ghost btn-small" id="copy-report" type="button">Copy summary</button>
       <button class="btn btn-ghost btn-small" id="download-json" type="button">Download full report (JSON)</button>
     </div>
+    <p class="section-note">Something in this report look wrong? <a id="report-wrong" href="#">Tell me — it helps the next student.</a></p>
     <h3 class="ada-heading">Accessibility <span class="tag">ADA / WCAG 2.1 AA</span></h3>
     <p class="section-note">Alt text, chart contrast, heading structure, table accessibility, reading order. An empty section means no accessibility issues were found.</p>
     <div id="ada"></div>
@@ -86,25 +123,53 @@
     <div id="formatting"></div>
   </section>
 
-  <section class="panel" id="how" aria-label="How it works">
+  <section class="panel card" id="rules" data-tab="02 / Rules" aria-label="Current rules">
+    <h2>Current rules — Purdue University, as per 2026 guidelines</h2>
+    <p class="section-note">Everything below is enforced by the checker, one finding per rule, each with what the
+      handbook wants <em>instead</em>. This list is generated from the checker's source code, so it can never go
+      stale — the readable version lives in
+      <a data-repo-file="RULES.md">RULES.md</a>.</p>
+    <div id="rules-list"></div>
+    <noscript><p>Enable JavaScript to browse the rules here, or read them in
+      <a data-repo-file="RULES.md">RULES.md</a>.</p></noscript>
+    <p class="section-note" id="rules-feedback"></p>
+  </section>
+
+  <section class="panel card" id="how" data-tab="03 / Process" aria-label="How it works">
     <h2>How it works</h2>
     <ol class="steps">
       <li><strong>Upload.</strong> Your <code>.docx</code> is read directly — styles, numbering, images, tracked changes.</li>
-      <li><strong>85 checks run.</strong> Handbook rules, template rules, accessibility rules, submission hygiene. No AI guessing.</li>
+      <li><strong><span data-rule-count>89</span> checks run.</strong> Handbook rules, template rules, accessibility rules, submission hygiene. No AI guessing.</li>
       <li><strong>You get locations + fixes.</strong> Every finding carries a stable rule ID and says what the handbook wants <em>instead</em>.</li>
     </ol>
     <p class="section-note">Want the auto-fixer too, or to run offline? The command-line tools are in the repo.</p>
     <p id="repo-cta"></p>
   </section>
 
-  <section class="panel" id="universities" aria-label="Universities">
+  <section class="panel card" id="universities" data-tab="04 / Community" aria-label="Universities">
     <h2>Not at Purdue?</h2>
-    <p>School-specific requirements live in config files, not in code. Add your university by copying one JSON file — <a href="#universities">contribution guide in the repo</a> walks you through it.</p>
+    <p><strong>Purdue is the only school supported today</strong> — every other university's rules are still waiting
+      for someone who knows them (maybe you?). School requirements live in config files, not in code: adding yours
+      means copying one JSON file and filling in your handbook's numbers.</p>
+    <p><a id="request-school" href="#">Request your school</a> — attach your graduate school's handbook
+      (or its key numbers: page size, margins, font, spacing, heading styles) and the maintainer will help turn it
+      into a config. Developers: the <a data-repo-file="universities/README.md">universities guide</a> and the
+      <a data-repo-file="CONTRIBUTING.md">contribution guide</a> walk you through it.</p>
   </section>
 
-  <footer>Unofficial community project — not sponsored by Purdue University. <span id="repo-link"></span></footer>
+  <section class="panel card" id="about" data-tab="05 / Builder" aria-label="About the builder">
+    <h2>Who built this?</h2>
+    <p><strong>Amogh Arya Munipalle</strong> — written while formatting a Purdue thesis, when the choice was
+      "check 89 rules by hand, again" or "teach a script to do it." The script won, and now it's yours.</p>
+    <p>See the rest of the work at the <a href="https://portfolio-sepia-six-18.vercel.app">portfolio</a>,
+      or follow along on <a href="https://github.com/mogiiee" target="_blank" rel="noopener">GitHub</a>.</p>
+  </section>
+  </div><!-- /.stage -->
+
+  <footer>Unofficial community project — not sponsored by Purdue University. Built by Amogh Arya Munipalle · <span id="repo-link"></span></footer>
 </main>
 <script src="config.js"></script>
+<script src="rules.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

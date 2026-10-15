@@ -39,12 +39,30 @@ The checker reads the OOXML directly — no Word install, no LLM, no network. Th
 | `TPL`   | The official Word template's styles, numbering, and front matter |
 | `A11Y`  | Accessibility: headings, alt text, 3:1 chart contrast, scanned pages, layout tables, text boxes, reading order |
 | `REV`   | Submission hygiene: tracked changes and comments must be resolved |
+| `SK`    | Extra strictness checks the handbook implies but never states outright (caption alignment, mention-before-appear) |
 
-Run `--selftest` to see all 85 rules demonstrated.
+The full catalog — every check in plain English, generated from the checker source — is [RULES.md](RULES.md).
+
+Run `--selftest` to see all 89 rules demonstrated.
 
 ## For other universities
 
 School-specific values (page size, font, heading names, caption pattern, word limits, …) live in `universities/*.json`, with Purdue as the default. Support your school by copying `purdue.json` and sending a PR — see [universities/README.md](universities/README.md). Run any school with `--university <name>` or `--config <path>`.
+
+## Deploy the browser API on Render
+
+The repository includes `render.yaml`; no command or secret needs to be typed
+by hand:
+
+1. In Render, choose **New → Blueprint** and connect this GitHub repository.
+2. Select `mogiiee/thesis-er` and apply the `thesis-er-api` blueprint.
+3. Wait for `/api/universities` to report healthy, then copy the public
+   `https://…onrender.com` service URL.
+4. Put that URL in `site/config.js` as `BACKEND_URL` and redeploy GitHub Pages.
+
+The API permits browser requests only from `https://mogiiee.github.io` by
+default. Uploaded files use a temporary file and are deleted in the same
+request; there is no database.
 
 ## Contributing
 
