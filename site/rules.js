@@ -76,7 +76,7 @@ const RULE_FAMILIES = [
     {"rule": "H1.13.TBLNOTE", "severity": "ERROR", "desc": "table note … can be pushed to the next page alone; set 'keep with next' on the last row so the note stays under its table"},
     {"rule": "H1.13.TBLSPACING", "severity": "ERROR", "desc": "table cell text … is not single spaced"},
     {"rule": "H1.13.WRAP", "severity": "ERROR", "desc": "table text wrapping must be 'None' (table is floating)"},
-    {"rule": "SK.CAPALIGN", "severity": "ERROR", "desc": "one-line caption must be centered (found …)"},
+    {"rule": "SK.CAPALIGN", "severity": "INFO", "desc": "estimated one-line caption is not centered (found …); confirm in Word"},
     {"rule": "SK.XREFORDER", "severity": "ERROR", "desc": "… is first mentioned after it appears (block …); refer to it before it appears"},
   ]},
   {"title": "Cross-references", "intro": "In-text references (Table 3.1, Figure 4.2) must use Word fields so they survive edits — not typed text.", "rules": [

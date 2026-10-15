@@ -1083,9 +1083,9 @@ class Checker:
             lines = line_count(b.text, 12.0, TEXT_WIDTH_PT - ((eff.get("left") or 0) / 20))
             jc = eff.get("jc")
             if lines == 1 and jc != "center":
-                self.add("SK.CAPALIGN", b, f"one-line caption must be centered (found {jc})")
+                self.add("SK.CAPALIGN", b, f"estimated one-line caption is not centered (found {jc}); confirm in Word", "INFO")
             if lines > 1 and jc != "both":
-                self.add("SK.CAPALIGN", b, f"multi-line caption must be justified (found {jc})")
+                self.add("SK.CAPALIGN", b, f"estimated multi-line caption is not justified (found {jc}); confirm in Word", "INFO")
             if any(local(a) in ("tc", "txbxContent") for a in b.el.iterancestors()):
                 self.add("H1.13.CAPINTABLE", b, "caption placed inside a table or text box")
             if eff.get("firstLine"):

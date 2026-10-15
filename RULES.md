@@ -101,7 +101,7 @@ Numbered captions in order, kept with their figure or table, placed after first 
 - **H1.13.TBLNOTE** (`ERROR`) — table note … can be pushed to the next page alone; set 'keep with next' on the last row so the note stays under its table
 - **H1.13.TBLSPACING** (`ERROR`) — table cell text … is not single spaced
 - **H1.13.WRAP** (`ERROR`) — table text wrapping must be 'None' (table is floating)
-- **SK.CAPALIGN** (`ERROR`) — one-line caption must be centered (found …)
+- **SK.CAPALIGN** (`INFO`) — estimated one-line caption is not centered (found …); confirm in Word
 - **SK.XREFORDER** (`ERROR`) — … is first mentioned after it appears (block …); refer to it before it appears
 
 ## Cross-references
