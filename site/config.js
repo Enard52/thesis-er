@@ -4,4 +4,4 @@
    "run it locally" message until a backend is deployed. */
 const REPO_URL = "https://github.com/mogiiee/thesis-er";
 const SITE_URL = "https://mogiiee.github.io/thesis-er/";
-const BACKEND_URL = "";
+const BACKEND_URL = "https://thesis-er-api.onrender.com/";
